@@ -1,0 +1,124 @@
+
+{% extends 'index.html'%}
+{% block page-content%}
+<style type="text/css">
+#li2 {  margin: 0;
+	padding: 0;}
+#li1{  margin: 0;
+	}
+</style>
+
+<body>
+<div class="container-fluid alert ">
+	<div class="row">
+		<div class="col-md-2 ">
+			<div class="nav nav-sidebar " role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+						<li class="active" id='li2'><a href="" id='li2'><div class="alert alert-success" role="alert" id='li1'>监控概览</div></a></li>
+						<li><a href="/autoApp/alarm/" id='li2'><div class="alert alert-info" role="alert" id='li1'>告警信息</div></a></li>
+						<li><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id='li2'><div class="alert alert-success" role="alert" id='li1'>运行状态</div></a>   
+						<div id="collapseOne" class="panel-collapse collapse {% if 'Switch' in request.path %} in {% endif %}">
+                                <div class="panel-body">
+                                    <ul class="nav" id="side-menu">
+                                            <li><a href="/autoApp/Switch_status/">交换机</a></li>
+                                            <li><a href="/autoApp/Physical_status/">服务器</a></li>
+                                            <li><a href="/autoApp/Windows_status/">虚拟机</a></li>
+                                    </UL>
+                                </div>
+                            </div>
+							</li>
+						<li><a href="/autoApp/net_traffic/" id='li2'><div class="alert alert-info" role="alert" id='li1'>流量图</div></a></li>
+						<li><a href="/autoApp/F5_vip/" id='li2'><div class="alert alert-success" role="alert" id='li1'>F5 vip流量</div></a></li>
+						<li><a href="/autoApp/port_traffic/" id='li2'><div class="alert alert-success" role="alert" id='li1'>端口流量</div></a></li>
+					  </ul>
+				</div>
+			</div>	
+		</div>
+		
+		<div class="col-md-9 container-fluid">
+		
+			<div class="panel panel-default">
+                        <div class="panel-heading">
+                             <h2 class="sub-header text-center">报警信息</h2>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive" id='triggers'>
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example" aria-describedby="dataTables-example_info">
+									  <thead>
+										<tr>
+										  <th>主机名</th>
+										  <th>时间</th>
+										  <th>报警详情</th>
+
+										</tr>
+									  </thead>
+									  <tbody>
+               
+									  </tbody>
+									</table>
+							</div>
+	
+						</div>
+			</div>
+	</div>
+
+		</div>
+	</div>
+</body>	
+      <!-- <div class="row"> -->
+       <!--  <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            
+
+
+        </div> -->
+   <!--      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+       
+
+ 
+
+          
+        </div>
+      </div> -->
+	<script>
+	   $(function(){
+		$.getJSON('/autoApp/triggers/',{'test':'test'},function(callback){
+            console.log(callback);
+			msg = '<table class="table table-striped table-bordered table-hover" id="dataTables-example">' + "<thead>" + "<tr>" + "<th>主机名</th>" + "<th>时间</th>" + "<th>报警详情</th>" +  "</tr>" + "</thead>";
+
+            $("#triggers").empty();
+            $.each(callback, function(k,v){
+			  console.log(k.host);
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1]+"</td><td>" + v[2] + "</td></tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#triggers").append(msg);
+		});//end get
+	
+    });
+	
+	
+	
+	
+    var autoRefresh = setInterval(function(){
+		$.getJSON('/autoApp/triggers/',{'test':'test'},function(callback){
+            console.log(callback);
+			msg = '<table class="table table-striped table-bordered table-hover" id="dataTables-example">' + "<thead>" + "<tr>" + "<th>主机名</th>" + "<th>时间</th>" + "<th>报警详情</th>" +  "</tr>" + "</thead>";
+
+            $("#triggers").empty();
+            $.each(callback, function(k,v){
+			  console.log(k.host);
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1]+"</td><td>" + v[2] + "</td></tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#triggers").append(msg);
+		});//end get
+	
+    },7000);
+	
+	</script>	  {%endblock%}
+
+
+

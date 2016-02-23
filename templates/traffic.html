@@ -1,0 +1,642 @@
+
+{% extends 'index.html'%}
+{% block page-content%}
+<style type="text/css">
+#li2 {  margin: 0;
+	padding: 0;}
+#li1{  margin: 0;
+	}
+</style>
+
+<script src="/static/Highstock/js/highstock.js"></script>
+<script src="/static/Highstock/js/modules/exporting.js"></script>
+<body>
+<div class="container-fluid alert ">
+	<div class="row">
+		<div class="col-md-2 ">
+			<div class="nav nav-sidebar " role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+						<li class="active" id='li2'><a href="" id='li2'><div class="alert alert-success" role="alert" id='li1'>监控概览</div></a></li>
+						<li><a href="/autoApp/alarm/" id='li2'><div class="alert alert-info" role="alert" id='li1'>告警信息</div></a></li>
+						<li><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id='li2'><div class="alert alert-success" role="alert" id='li1'>运行状态</div></a>   
+						<div id="collapseOne" class="panel-collapse collapse {% if 'Switch' in request.path %} in {% endif %}">
+                                <div class="panel-body">
+                                    <ul class="nav" id="side-menu">
+                                            <li><a href="/autoApp/Switch_status/">交换机</a></li>
+                                            <li><a href="/autoApp/Physical_status/">服务器</a></li>
+                                            <li><a href="/autoApp/Windows_status/">虚拟机</a></li>
+                                    </UL>
+                                </div>
+                            </div>
+							</li>
+						<li><a href="/autoApp/net_traffic/" id='li2'><div class="alert alert-info" role="alert" id='li1'>流量图</div></a></li>
+						<li><a href="/autoApp/F5_vip/" id='li2'><div class="alert alert-success" role="alert" id='li1'>F5 vip流量</div></a></li>
+						<li><a href="/autoApp/port_traffic/" id='li2'><div class="alert alert-success" role="alert" id='li1'>端口流量</div></a></li>
+					  </ul>
+				</div>
+			</div>	
+		</div>
+		
+		
+		
+		
+        <div class="col-md-9 container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 class="sub-header text-center">流量图</h2>
+				</div> 
+				<div class="table-responsive" id='triggers'>
+					<h2 class="flagicon">主要设备流量图表</h2>
+				<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+				</div>
+				<div>&nbsp;&nbsp;&nbsp; </div>
+				<div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+				<div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+				<div id="container4" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+				<!-- <div id="container5" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div> -->
+				<div id="container6" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+				<div id="container7" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+				<div id="container8" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+				<div id="container9" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+				<!-- <div id="container10" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div> -->
+				<div id="container11" style="min-width: 310px; height: 400px; margin: 0 auto; border-color:#CFCFCF; border: 1px solid ;"></div>
+		  
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+		
+	 <script type="text/javascript">
+	$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/1/', function(data){
+    $('#container1').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '172.16.8.150 G1/0/49 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data[0]
+        }, {
+            name: 'Traffic IN',
+            data: data[1]
+        }]
+    });
+	  });
+});
+/*var autoRefresh = setInterval(function(){
+	$.getJSON('/autoApp/get_Zabbix_db', function (data){
+    $('#container1').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '172.16.8.150 G1/0/49 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data[0]
+        }, {
+            name: 'Traffic IN',
+            data: data[1]
+        }]
+    });
+	  });
+},50000);
+*/
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/2/', function (data1){
+    $('#container2').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '去往慧聪园 172.16.8.54 G1/0/6 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/3/', function (data1){
+    $('#container3').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '去往马甸 172.16.8.54 G1/0/12 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/4/', function (data1){
+    $('#container4').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '去往三元桥 172.16.8.54 G2/0/12 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/5/', function (data1){
+    $('#container5').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: ' 去往三元桥 172.16.8.211 G1/0/26 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/6/', function (data1){
+    $('#container6').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: ' 去往马甸 172.16.8.211 G2/0/28 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/7/', function (data1){
+    $('#container7').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '  去 交易CNC 172.16.8.200 G0/8 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(bit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/8/', function (data1){
+    $('#container8').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '去交易E1-bank 72.16.8.200 G0/20 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(bit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/9/', function (data1){
+    $('#container9').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: ' 去京仪办公网 172.16.18.2 G0/19 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/10/', function (data1){
+    $('#container10').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '去HCY-F5负载 VLan 11 172.16.8.12 G0/10 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y +'°C';
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+$(function(){
+	$.getJSON('/autoApp/get_Zabbix_db1/11/', function (data1){
+    $('#container11').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '去办公网出口 172.16.18.1 G2/0/4 Traffic'
+        },
+		credits:{
+			enabled: false
+		},
+        subtitle: {
+            text: 'Source: hc360.com'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: '(Mbit)'
+            }
+        },
+        tooltip: {
+            enabled: false,
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br>'+this.x +': '+ this.y ;
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Traffic OUT',
+            data: data1[0]
+        }, {
+            name: 'Traffic IN',
+            data: data1[1]
+        }]
+    });
+	  });
+});		
+			</script>
+			{%endblock%}
+
+
+

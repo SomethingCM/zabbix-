@@ -1,0 +1,22 @@
+
+{% extends 'index.html'%}
+{% block page-content%}
+	
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">监控概览</a></li>
+            <li><a href="#">告警信息</a></li>
+            <li><a href="/autoApp/service_status/">运行状态</a></li>
+            <li><a href="/autoApp/traffic/">流量图</a></li>
+          </ul>
+
+
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+         <iframe width="100%" height='800px' src="/autoApp/alarm/" frameborder="0"></iframe>
+      </div>
+	  {%endblock%}
+
+
+

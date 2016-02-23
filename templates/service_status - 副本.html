@@ -1,0 +1,67 @@
+{% extends 'index.html'%}
+{% block page-content%}
+ 
+
+
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+              <li class="active"><a href="#">监控概览</a></li>
+            <li><a href="/autoApp/alarm/">告警信息</a></li>
+            <li><a href="/autoApp/service_status/">运行状态</a></li>
+            <li><a href="/autoApp/traffic/">流量图</a></li>
+          </ul>
+
+
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+
+ 
+
+          <h2 class="sub-header">Section title</h2>
+          <div class="table-responsive" id='monitor_check'>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+				  <th>组</th>
+                  <th>主机</th>
+                  <th>CPU5分钟负载</th>
+			      <th>可用平均内存(单位M)</th>
+			      <th>根分区平均剩余(单位G)</th>
+			      
+                </tr>
+              </thead>
+              <tbody>
+               
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+	
+	
+		
+<script type="text/javascript">
+    var autoRefresh = setInterval(function(){
+		$.getJSON('/autoApp/monitor_check/',{'test':'test'},function(callback){
+            console.log(callback);
+			msg = "<table class=" + "table table-striped" + ">" + "<thead>" + "<tr>" + "<th>组</th>"  + "<th>主机</th>" + "<th>CPU5分钟负载</th>"+ "<th>可用平均内存(单位M)</th>" + "<th>根分区平均剩余(单位G)</th>"  +  "</tr>" + "</thead>";
+
+            $("#monitor_check").empty();
+			
+            $.each(callback, function(k,v){
+			  //console.log(k);
+
+						msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" +  v[1] +"</td><td>" + v[2]+"</td><td>"  + v[3]+"</td><td>" + v[4] + "</td></tr>"
+
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#monitor_check").append(msg);
+		});//end get
+	
+    },50000);
+</script>
+{%endblock%}

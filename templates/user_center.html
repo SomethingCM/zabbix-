@@ -1,0 +1,86 @@
+﻿{% extends 'index.html'%}
+{% block page-content%}
+<style>
+
+.user_form {
+    width:450px;
+
+    
+}
+</style>
+
+<div class="row-fluid">
+		<div class="span2">
+		
+		</div>
+		<div class="span8">
+		  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="row user_form">
+			 <form class="form" role="form" action='/autoApp/passwd_change/' method='POST'>
+				<h2 class="form-signin-heading ">用户信息修改</h2><hr>
+				<div class="form-group">
+					<label for="exampleInputEmail1">用户名</label>
+					<input name='username' type="input" class="form-control" id="exampleInputEmail1" placeholder="username" required autofocus>
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputPassword1">旧密码</label>
+					<input name='password1' type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputPassword1">新密码</label>
+					<input id='p1' name='password2' type="password" class="form-control" placeholder="Password" required>
+				  </div>
+				  <div class="form-group">
+					<label for="exampleInputPassword1">确认密码</label>
+					<input id='p2'  type="password" class="form-control"  placeholder="Password" required onchange="myFunction()"> 
+					<p id='perr' style="color:red"></p>
+				  </div>
+	
+				  <button type="submit" class="btn btn-default pull-right">确认</button>
+				  <p style="color:red">{{info}}</p>
+				  
+				  
+				  
+
+				</form>
+				<script>
+					function myFunction()
+					{
+					var x=document.getElementById("p1");
+					var y=document.getElementById("p2");
+					if (x.value!=y.value)
+					{
+						perr.innerHTML="密码不一致!";
+					}
+				
+					}
+					</script>
+		</div>
+		</div>
+
+		</div>
+    
+
+  
+
+      
+
+			
+  
+     
+
+	
+
+
+          
+	
+		<div class="span2">
+
+		</div>
+		
+		
+</div>
+
+
+
+{%endblock%}

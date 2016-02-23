@@ -1,0 +1,166 @@
+﻿{% extends 'index.html'%}
+{% block page_content%}
+<style type="text/css">
+body,button, input, select, textarea ,h2, h3, h4, h5, h6  { font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;}
+h1{ font-family: KaiTi,'宋体' , Tahoma, Helvetica, Arial, "\6977\4F53", sans-serif;}
+          
+  body , #reg {  
+  
+    color:#fff;  
+    background:rgba(0,0,0,0.6);  
+    background:#000 9;/*CSS Hack,只能对ie9以下浏览器ie6,ie7,ie8有效，否侧ie10,FF,Cherome会失去透明效果*/  
+    filter:Alpha(opacity=100);/*只对ie7,ie8有效*/  
+}  
+.#reg p,  
+.#reg div,  
+.#reg img{  
+    position:relative;  
+    /*或者是absolute，都可以使文字不透明，这样做还是为了  
+    兼容ie9,ie8,ie7下背景透明而而背景上的文字不透明的效果*/  
+}
+
+</style>
+<!-- <script>
+
+	   $(function(){
+		$.getJSON('/autoApp/cloud_api/',{'test':'a'},function(callback){
+            console.log(callback);
+			msg = "<table class=" +'"table"' + ">" + "<thead>" + "<tr>" + "<th>主机名</th>"  + "<th>报警详情</th>" +  "</tr>" + "</thead>";
+			msg = "	<thead><tr><th>Machine name</th><th>Templatename</th><th>Hostname</th><th>Cpus</th><th>MAX mem</th><th>Status</th><th>IP</th></tr></thead>"
+            $("#cloud").empty();
+            $.each(callback, function(k,v){
+			  console.log(k.host);
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1] + "</td><td>" + v[2]+"</td><td>" + "</td><td>" + v[3]+"</td><td>"+ "</td><td>" + v[4]+"</td><td>"  + "</td><td>" + v[5]+"</td><td>" + "</td><td>" + v[6]+"</td></tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#cloud").append(msg);
+		});//end get
+	
+    });
+	
+
+	</script> -->
+
+
+
+<body>
+<div class="container-fluid">
+<div class="alert alert-success" role="alert">
+	<a href="/autoApp/cloud_web/">
+  <h1 class="text-center " ><b>云平台</b></h2></a>
+</div>
+<div class="alert alert-info" role="alert">
+	<div class="row-fluid">
+		<div class="span12" >
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>
+							Machine name
+						</th>
+						<th>
+							Templatename
+						</th>
+						<th>
+							Hostname
+						</th>
+						<th>
+							Cpus
+						</th>
+						<th>
+							MAX mem
+						</th>
+						<th>
+							Status
+						</th>
+						<th>
+							IP
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+			{% for res in results %}
+					<tr>
+						<td>
+							{{res.name}}
+						</td>
+						<td>
+							{{res.templatename}}
+						</td>
+						<td>
+							{{res.hostname}}
+						</td>
+						<td>
+							{{res.cpunumber}}
+						</td>
+						<td>
+							{{res.memory}}
+						</td>
+						<td>
+							{{res.state}}
+						</td>
+						<td>
+							{{res.nic.0.ipaddress}}
+						</td>
+					</tr>
+					{% endfor %}
+					
+				</tbody>
+
+			</table>
+			<table class="table table-bordered table-hover">
+				<thead>
+				<tr>
+						<th class="text-center ">
+							{{err}}{{info}}
+						</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="alert alert-success" role="alert">
+	<a href="#register" class="content-header-action" data-toggle="modal">
+	<p><button type="submit" class="btn btn-primary">添加虚拟机</button>  </a> 
+	
+</div>
+<div id="register" class="modal fade">
+	
+	<div class="modal-dialog" >
+		<div class="modal-content" id='reg'>
+		
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h3 class="modal-title text-center">添加虚拟机</h3>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" action="/autoApp/cloud_register/" method='POST'>
+			 
+					<div class="control-group">
+						<label for="input" class="control-label">虚拟机名</label>
+                    <div class="controls">
+						<input type="input" class="form-control" name="name" placeholder="Enter vmname">
+					</div>
+					</div>
+				<label for="inputEmail" class="control-label">系统版本</label>
+				<select name="os" class="form-control">
+				  <option value="5">centos5.6</option>
+				  <option value="6">centos6.2</option>
+				</select>
+				<br>
+				<button type="submit" class="pull-right btn btn-primary ">确认</button>
+				</form>
+				<br>
+			</div>
+			
+		</div>
+
+</div>
+</div>
+
+
+
+
+{%endblock%}
+</body>

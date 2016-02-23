@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+<LINK href="/static/img/bfavicon.ico" type="image/x-icon" rel=icon>
+<LINK href="/static/img/bfavicon.ico" type="image/x-icon" rel="shortcut icon">
+    <title>自动化运维系统</title>
+	<!-- 外加 -->
+ <style type="text/css">
+      body {
+        background: #E4E4E4;
+        padding-top: 45px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+       
+	  
+	<!-- 外加 -->
+    </style>
+    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link href="/static/bootstrap/dist/css/dashboard.css" rel="stylesheet">
+   <script src="/static/bootstrap/dist/js/ie-emulation-modes-warning.js"></script>
+   <script src="/static/bootstrap/dist/js/jquery-2.1.1.min.js"></script>
+    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+   
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+		  <a class="navbar-brand" href="/">首页</a>
+          <a class="navbar-brand" href="/autoApp/index/">自动化运维系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+             {% if user.is_authenticated  %}
+                    
+                   <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.username}}<span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                       <li><a href="/autoAuth/user/changepwd/">修改密码</a></li>
+                        <li><a href="/logout/">Logout </a></li>
+                      </ul>
+                    </li>  
+                {% else %}
+                   <li> <a href="/login/">Login</a> </li>
+                {% endif %}
+          </ul>
+          <!-- <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form> -->
+        </div>
+      </div>
+    </div>
+{%  block page_content %}
+<div class="container-fluid">
+{%  block page-content %}
+	
+	<div class="row-fluid">
+		<div class="span2">
+
+		</div>
+	<div class="span8">
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="row">
+
+				<div class="col-sm-6 col-md-4 col-lg-3 ">
+				  <div class="thumbnail">
+					<a href="/autoApp/alarm" title="监控告警" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])"><img class="lazy" src="/static/img/gaojing.gif"  width="300" height="150" src="/static/img/gaojing.gif" alt="Headroom.js"></a>
+					<div class="caption">
+					  <h3> 
+						<a href="/autoApp/alarm" title="近期服务器报警情况概览" target="" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])">监控告警<br><small>监控告警</small></a>
+					  </h3>
+					  <p>
+					 近期服务器等设备报警情况概览
+					  </p>
+					</div>
+				  </div>
+				</div>
+				<div class="col-sm-6 col-md-4 col-md-4 col-lg-3 ">
+				  <div class="thumbnail">
+					<a href="/VmTools/vmtool" title="虚拟机管理" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'bootcdn'])"><img class="lazy" src="/static/img/xunijiguanli.gif" width="300" height="150" data-src="/static/img/xunijiguanli.gif" alt="Open CDN"></a>
+					<div class="caption">
+					  <h3> 
+						<a href="/VmTools/vmtool" title="虚拟机管理" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'bootcdn'])">虚拟机管理<br><small>虚拟机管理</small></a>
+					  </h3>
+					  <p>虚拟机管理
+					  </p>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="col-sm-6 col-md-4 col-lg-3 ">
+				  <div class="thumbnail">
+					<a href="/autoCloud/cloud/list/" title="云平台" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'job'])"><img class="lazy" src="/static/img/yunpingtai.gif" width="300" height="150" data-src="http://static/img/yunpingtai.gif" alt="云平台"></a>
+					<div class="caption">
+					  <h3> 
+						<a href="/autoCloud/cloud/list/" title="云平台"  onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'job'])">云平台<br><small>云平台</small></a>
+					  </h3>
+					  <p>
+					  云平台个人中心
+					  </p>
+					</div>
+				  </div>
+				</div>
+		
+
+		    </div> 
+		  </div> 
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">		
+			<div class="row">
+						<div class="col-sm-6 col-md-4 col-md-4 col-lg-3 ">
+				  <div class="thumbnail">
+					<a href="/autoApp/saltstack" title="服务器运维" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'bootcdn'])"><img class="lazy" src="/static/img/fuwuqiyunwei.gif" width="300" height="150" data-src="/static/img/fuwuqiyunwei.gif" alt="Open CDN"></a>
+					<div class="caption">
+					  <h3> 
+						<a href="/autoApp/saltstack" title="服务器运维"  onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'bootcdn'])">服务器运维<br><small>服务器运维</small></a>
+					  </h3>
+					  <p>saltstack and gateone
+					  </p>
+					</div>
+				  </div>
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3 ">
+				  <div class="thumbnail">
+					<a href="/autoRate/rate_graph" title="故障率" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])"><img class="lazy" src="/static/img/guzhanglv.gif" width="300" height="150" data-src="/static/img/guzhanglv.gif" alt="Headroom.js"></a>
+					<div class="caption">
+					  <h3> 
+						<a href="#" title="故障率" target="" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])">故障率<br><small>故障率</small></a>
+					  </h3>
+					  <p>
+					 服务器及网络设备故障率信息
+					  </p>
+					</div>
+				  </div>
+				</div>
+
+
+				
+
+
+				<div class="col-sm-6 col-md-4 col-lg-3 ">
+				  <div class="thumbnail" >
+					<a href="/CMDB/server_list/" title="资产管理" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])"><img class="lazy" src="/static/img/zichanguanli.gif" width="300" height="150" data-src="/static/img/zichanguanli.gif" alt="Headroom.js"></a>
+					<div class="caption">
+					  <h3> 
+						<a href="/CMDB/server_list/" title="资产管理" target="" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])">资产管理<br><small>资产管理</small></a>
+					  </h3>
+					  <p>
+					 服务器及网络设备资产管理信息
+					  </p>
+					</div>
+				  </div>
+				</div>
+			</div>
+		</div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">		
+			<div class="row">
+		
+<!-- style="background:url()" -->
+				<div class="col-sm-6 col-md-4 col-lg-3 ">
+				  <div class="thumbnail"  >
+					<a href="/autoAuth/home" title="" target="_blank" border="none" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'job'])"><img class="lazy" src="/static/img/quanxianguanli.gif" width="300" height="200" border="none" data-src="/static/img/quanxianguanli.gif" alt="权限管理"></a>
+				
+					<div class="caption" border="none"  >
+					  <h3> 
+						<a href="/autoAuth/home" title="权限管理" border="none" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'job'])">权限管理<br><small>权限管理</small></a>
+					  </h3>
+					  <p>
+					  权限管理
+					  </p>
+					</div>
+				  </div>
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3 ">
+				  <div class="thumbnail">
+					<a href="/LVS/listvip/" title="" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'job'])"><img class="lazy" src="/static/img/lvsguanli.jpg" width="300" height="200" border="none"  data-src="/static/img/lvsguanli.jpg" alt=""></a>
+					<div class="caption" border="none"  >
+					  <h3> 
+						<a href="/LVS/listvip/" title="LVS管理"  onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'job'])">LVS管理<br><small>LVS管理</small></a>
+					  </h3>
+					  <p>
+					  LVS管理
+					  </p>
+					</div>
+				  </div>
+				</div>
+				
+
+				<div class="col-sm-6 col-md-4 col-md-4 col-lg-3 ">
+				  <div class="thumbnail">
+					<a href={% url "dockerindexurl" %} title="保留" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'bootcdn'])"><img class="lazy" src="/static/img/docker.gif" width="300" height="150" data-src="/static/img/docker.gif" alt="Open CDN"></a>
+					<div class="caption">
+					  <h3> 
+						<a href={% url "dockerindexurl" %} title="保留" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'bootcdn'])">Docker<br><small>docker</small></a>
+					  </h3>
+					  <p>
+					  </p>
+					</div>
+				  </div>
+				</div>
+
+			</div>
+		</div>
+          
+	</div>
+		<div class="span2">
+
+		</div>
+	</div>
+{%endblock%}
+</div>
+{%endblock%}
+
+
+    <!-- <script src="/static/bootstrap/dist/js/docs.min.js"></script>  -->
+  
+  </body>
+</html>

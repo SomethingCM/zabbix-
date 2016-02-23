@@ -1,0 +1,766 @@
+﻿{% extends 'index.html'%}
+{% block page_content%}
+<style> 
+#divcss{ 
+height:100px; 
+} 
+</style>
+
+<body>
+<div class="container-fluid" id='divcss'>
+<div class="row" id='divcss'>
+
+
+  <div class="col-xs-7">
+	  <div class="alert alert-warning alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <div id='loadbance'>
+	  <table class="table">
+				<thead>
+					<tr>
+						<th>
+							机器
+						</th>
+						<th>
+							CPU
+						</th>
+						<th>
+							内存
+						</th>
+						<th>
+							连接数
+						</th>
+						<th>
+							流量
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+			</div>
+	  </div>
+
+	<div class="alert alert-danger alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <div id="triggers">
+	  <table class="table">
+				<thead>
+					<tr>
+						<th>
+							主机
+						</th>
+						<th>
+							时间
+						</th>
+						<th>
+							告警信息
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+
+
+					</tr>
+				</tbody>
+			</table>
+	</div>
+	</div>
+
+	<div class="alert alert-info alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	<!-- <div id="container1" style="min-width: 310px; height: 500px; margin: 0 auto"></div> -->
+	<div id="container1" ></div>
+	<hr>
+	<div id="container2" ></div><br>
+	</div>
+  </div>
+    <div class="col-xs-5" style="height: 500px">
+	<div class="alert alert-info alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	<div id="YZ" ></div>
+	<div id="LT" ></div>
+	<div id="DX" ></div>
+
+
+	</div>
+  </div>
+</div>
+</div>
+
+<div class="container-fluid">
+  
+</div>
+
+
+
+
+
+</body>
+</style>
+<script src="/static/Highstock/js/highstock.js"></script>
+<script src="/static/Highstock/js/modules/exporting.js"></script>
+
+<!-- 监控报警 -->
+<script>
+
+	   $(function(){
+		$.getJSON('/autoApp/triggers/',{'test':'a'},function(callback){
+            //console.log(callback);
+			msg = "<table class=" +'"table"' + ">" + "<thead>" + "<tr>" + "<th>主机名</th>" + "<th>报警时间</th>" + "<th>报警详情</th>" +  "</tr>" + "</thead>";
+
+            $("#triggers").empty();
+            $.each(callback, function(k,v){
+			 
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1]+"</td><td>"+ v[2] + "</td></tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#triggers").append(msg);
+		});//end get
+	
+    });
+	
+	
+	
+	
+    var autoRefresh = setInterval(function(){
+		$.getJSON('/autoApp/triggers/',{'test':'a'},function(callback){
+            //console.log(callback);
+			msg = "<table class=" +'"table"' + ">" + "<thead>" + "<tr>" + "<th>主机名</th>" + "<th>报警时间</th>" + "<th>报警详情</th>" +  "</tr>" + "</thead>";
+
+            $("#triggers").empty();
+            $.each(callback, function(k,v){
+			
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1]+"</td><td>"+ v[2] + "</td></tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#triggers").append(msg);
+		});//end get
+	
+    },70001);
+	
+	</script>
+	<!-- loadbance -->
+<script>
+
+	   $(function(){
+		$.getJSON('/autoApp/loadbance/',function(callback){
+            //console.log(callback);
+			msg = "<table class=" + '"table"' + ">" + "<thead>" + "<tr>" + "<th>机器</th>"  + "<th>CPU</th>"  + "<th>内存(M)</th>" +  "<th>IN(M)</th>"+  "<th>OUT(M)</th>"+ "<th>连接数</th>"+  "</tr>" + "</thead>";
+
+            $("#loadbance").empty();
+            $.each(callback, function(k,v){
+			 
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1]+"%"+"</td><td>" + v[2]+"%"+"</td><td>" + v[3]+"</td><td>" +  v[4]+"</td><td>" +v[5]+ "</td></tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#loadbance").append(msg);
+		});//end get
+	
+    });
+	
+	
+	
+	
+    var autoRefresh = setInterval(function(){
+		$.getJSON('/autoApp/loadbance/',function(callback){
+            //console.log(callback);
+			msg = "<table class=" + '"table"' + ">" + "<thead>" + "<tr>" + "<th>机器</th>"  + "<th>CPU</th>"  + "<th>内存(M)</th>" +  "<th>IN(M)</th>"+  "<th>OUT(M)</th>"+ "<th>连接数</th>"+  "</tr>" + "</thead>";
+
+            $("#loadbance").empty();
+            $.each(callback, function(k,v){
+			 
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1]+"%"+"</td><td>" + v[2]+"%"+"</td><td>" + v[3]+"</td><td>" +  v[4]+"</td><td>" +v[5]+ "</td></tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#loadbance").append(msg);
+		});//end get
+	
+    },70000);
+	
+	</script>
+<!-- 打开网站所需时间 -->
+<script type="text/javascript">
+/**
+ * Grid-light theme for Highcharts JS
+ * @author Torstein Honsi
+ */
+
+// Load the fonts
+Highcharts.createElement('link', {
+	<!-- href: 'http://fonts.googleapis.com/css?family=Dosis:400,600', -->
+	rel: 'stylesheet',
+	type: 'text/css'
+}, null, document.getElementsByTagName('head')[0]);
+
+Highcharts.theme = {
+	colors: ["#7cb5ec", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+		"#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+	chart: {
+		backgroundColor: null,
+		style: {
+			fontFamily: "Dosis, sans-serif"
+		}
+	},
+	title: {
+		style: {
+			fontSize: '16px',
+			fontWeight: 'bold',
+			textTransform: 'uppercase'
+		}
+	},
+	tooltip: {
+		borderWidth: 0,
+		backgroundColor: 'rgba(219,219,216,0.8)',
+		shadow: false
+	},
+	legend: {
+		itemStyle: {
+			fontWeight: 'bold',
+			fontSize: '13px'
+		}
+	},
+	xAxis: {
+		gridLineWidth: 1,
+		labels: {
+			style: {
+				fontSize: '12px'
+			}
+		}
+	},
+	yAxis: {
+		minorTickInterval: 'auto',
+		title: {
+			style: {
+				textTransform: 'uppercase'
+			}
+		},
+		labels: {
+			style: {
+				fontSize: '12px'
+			}
+		}
+	},
+	plotOptions: {
+		candlestick: {
+			lineColor: '#404048'
+		}
+	},
+
+
+	// General
+	background2: '#F0F0EA'
+	
+};
+
+// Apply the theme
+Highcharts.setOptions(Highcharts.theme);
+
+$(function(){
+$.getJSON('/autoApp/curl_ping/', function(data){
+	console.log(data);
+    $('#container1').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: '网络延时'
+        },
+        subtitle: {
+            text: 'Source: HC360.com'
+        },
+        xAxis: {
+            categories: ['办公区', '亦庄'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '延时 (ms)',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' ms'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: '完成请求www.hc360.com所用时间',
+            data: data[0]
+        }, {
+            name: 'PING www.hc360.com延时',
+            data: data[1]
+        },{
+            name: '完成请求www.1688.com所用时间',
+            data: data[2]
+        },{
+            name: 'PING www.1688.com延时',
+            data: data[3]
+        }, {
+            name: '完成请求www.baidu.com所用时间',
+            data: data[4]
+        }, {
+            name: 'PING www.baidu.com延时',
+            data: data[5]
+        }]
+    });
+			msg = "<table class=" + '"table"' + ">" + "<thead>" + "<tr>" + "<th>域名/解析IP</th>"  + "<th>办公区</th>" + "<th>亦庄</th>" + "</tr>" + "</thead>";
+	        $("#container2").empty();
+            $.each(data[6], function(k,v){
+			
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1] + "</td><td>" + v[2] + "</td> </tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#container2").append(msg);
+	});
+});
+
+var autoRefresh = setInterval(function(){
+$.getJSON('/autoApp/curl_ping/', function(data){
+	console.log(data);
+    $('#container1').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: '网络延时'
+        },
+        subtitle: {
+            text: 'Source: HC360.com'
+        },
+        xAxis: {
+            categories: ['办公区', '亦庄'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '延时 (ms)',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' ms'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: '完成请求www.hc360.com所用时间',
+            data: data[0]
+        }, {
+            name: 'PING www.hc360.com延时',
+            data: data[1]
+        },{
+            name: '完成请求www.1688.com所用时间',
+            data: data[2]
+        },{
+            name: 'PING www.1688.com延时',
+            data: data[3]
+        }, {
+            name: '完成请求www.baidu.com所用时间',
+            data: data[4]
+        }, {
+            name: 'PING www.baidu.com延时',
+            data: data[5]
+        }]
+    });
+			msg = "<table class=" + '"table"' + ">" + "<thead>" + "<tr>" + "<th>域名/解析IP</th>"  + "<th>办公区</th>" + "<th>亦庄</th>" + "</tr>" + "</thead>";
+	        $("#container2").empty();
+            $.each(data[6], function(k,v){
+			  //console.log(k.host);
+                msg =  msg + "<tbody>" + "<tr><td>" + v[0]+"</td><td>" + v[1] + "</td><td>" + v[2]  + "</td> </tr>";
+            });//end each   
+				msg = msg + "</tbody></table>"
+                $("#container2").append(msg);
+	});
+},70001);
+	
+</script>
+
+<script type="text/javascript">
+
+			$(function () {
+					$.getJSON('/autoMonitor/main_flow',{'flow':'yizhuang'}, function (data) {
+						// Create the chart
+						$('#YZ').highcharts({
+									chart: {
+										type: 'spline'
+									},
+									title: {
+										text: '亦庄'
+									},
+									
+									xAxis: {
+									
+									tickPixelInterval: 50,
+										type: 'datetime', 
+										
+										/*dateTimeLabelFormats: { // don't display the dummy year
+											month: '%e. %b',
+											year: '%b'
+										}*/
+									labels: {  
+									formatter: function() {  
+										var vDate=new Date(this.value);  
+ 
+										//return vDate.getYear()+"-"+(vDate.getMonth()+1)+"-"+vDate.getDate()+"<br>"+vDate.getHours()+":"+vDate.getMinutes();  
+										return vDate.getHours()+":"+vDate.getMinutes();  
+									},  
+									align: 'center'  
+									} 
+									},
+									yAxis: {
+										title: {
+											text:'Flow (M)'
+										},
+										min: 0
+							
+									},
+								   tooltip: {
+										formatter: function() {
+												return '<b>'+ this.series.name +'</b><br>'+
+												Highcharts.dateFormat('%Y-%b-%e', this.x) +': '+ this.y +' M';
+										}
+									},
+			
+					/*				        plotOptions: {
+            spline: {
+                lineWidth: 4,
+                states: {
+                    hover: {
+                        lineWidth: 5
+                    }
+                },
+                marker: {
+                    enabled: false
+                },
+                pointInterval: 3600000, // one hour
+                pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+            }
+        },*/
+
+									series: [{
+										name: '亦庄-IN',
+										data: data[0]
+									},{
+										name: '亦庄-OUT',
+										data: data[1]
+									}]
+								});
+							});
+				});
+			
+			$(function () {
+					$.getJSON('/autoMonitor/main_flow',{'flow':'liantong_100M'}, function (data) {
+						// Create the chart
+						$('#LT').highcharts({
+									chart: {
+										type: 'spline'
+									},
+									title: {
+										text: '联通 100M'
+									},
+									xAxis: {
+									tickPixelInterval: 50,
+										type: 'datetime', 
+										/*dateTimeLabelFormats: { // don't display the dummy year
+											month: '%e. %b',
+											year: '%b'
+										}*/
+									labels: {  
+									formatter: function() {  
+										var vDate=new Date(this.value);  
+ 
+										//return vDate.getYear()+"-"+(vDate.getMonth()+1)+"-"+vDate.getDate()+"<br>"+vDate.getHours()+":"+vDate.getMinutes();  
+										return vDate.getHours()+":"+vDate.getMinutes();  
+									},  
+									align: 'center'  
+									} 
+									},
+									yAxis: {
+										title: {
+											text:'Flow (M)'
+										},
+										min: 0
+							
+									},
+								   tooltip: {
+										formatter: function() {
+												return '<b>'+ this.series.name +'</b><br>'+
+												Highcharts.dateFormat('%Y-%b-%e', this.x) +': '+ this.y +' m';
+										}
+									},
+			
+									
+									series: [{
+										name: '联通-IN',
+										data: data[0]
+									},{
+										name: '联通-OUT',
+										data: data[1]
+									}]
+								});
+							});
+				});
+				
+			$(function () {
+					$.getJSON('/autoMonitor/main_flow',{'flow':'dianxin_100M'}, function (data) {
+						// Create the chart
+						$('#DX').highcharts({
+									chart: {
+										type: 'spline'
+									},
+									title: {
+										text: '电信 100M'
+									},
+										xAxis: {
+									tickPixelInterval: 50,
+										type: 'datetime', 
+										/*dateTimeLabelFormats: { // don't display the dummy year
+											month: '%e. %b',
+											year: '%b'
+										}*/
+									labels: {  
+									formatter: function() {  
+										var vDate=new Date(this.value);  
+ 
+										//return vDate.getYear()+"-"+(vDate.getMonth()+1)+"-"+vDate.getDate()+"<br>"+vDate.getHours()+":"+vDate.getMinutes();  
+										return vDate.getHours()+":"+vDate.getMinutes();  
+									},  
+									align: 'center'  
+									} 
+									},
+									yAxis: {
+										title: {
+											text:'Flow (M)'
+										},
+										min: 0
+							
+									},
+								   tooltip: {
+										formatter: function() {
+												return '<b>'+ this.series.name +'</b><br>'+
+												Highcharts.dateFormat('%Y-%b-%e', this.x) +': '+ this.y +' m';
+										}
+									},
+			
+									series: [{
+										name: '电信-IN',
+										data: data[0]
+									},{
+										name: '电信-OUT',
+										data: data[1]
+									}]
+								});
+							});
+				});
+	var autoRefresh = setInterval(function(){
+	$.getJSON('/autoMonitor/main_flow',{'flow':'yizhuang'}, function (data) {
+						// Create the chart
+						$('#YZ').highcharts({
+									chart: {
+										type: 'spline'
+									},
+									title: {
+										text: '亦庄'
+									},
+									xAxis: {
+									tickPixelInterval: 50,
+										type: 'datetime', 
+										/*dateTimeLabelFormats: { // don't display the dummy year
+											month: '%e. %b',
+											year: '%b'
+										}*/
+									labels: {  
+									formatter: function() {  
+										var vDate=new Date(this.value);  
+ 
+										//return vDate.getYear()+"-"+(vDate.getMonth()+1)+"-"+vDate.getDate()+"<br>"+vDate.getHours()+":"+vDate.getMinutes();  
+										return vDate.getHours()+":"+vDate.getMinutes();  
+									},  
+									align: 'center'  
+									} 
+									},
+									yAxis: {
+										title: {
+											text:'Flow (M)'
+										},
+										min: 0
+							
+									},
+								   tooltip: {
+										formatter: function() {
+												return '<b>'+ this.series.name +'</b><br>'+
+												Highcharts.dateFormat('%Y-%b-%e', this.x) +': '+ this.y +' m';
+										}
+									},
+			
+									
+									series: [{
+										name: '亦庄-IN',
+										data: data[0]
+									},{
+										name: '亦庄-OUT',
+										data: data[1]
+									}]
+								});
+							});
+			
+				$.getJSON('/autoMonitor/main_flow',{'flow':'liantong_100M'}, function (data) {
+						// Create the chart
+						$('#LT').highcharts({
+									chart: {
+										type: 'spline'
+									},
+									title: {
+										text: '联通 100M'
+									},
+									xAxis: {
+									tickPixelInterval: 50,
+										type: 'datetime', 
+										/*dateTimeLabelFormats: { // don't display the dummy year
+											month: '%e. %b',
+											year: '%b'
+										}*/
+									labels: {  
+									formatter: function() {  
+										var vDate=new Date(this.value);  
+ 
+										//return vDate.getYear()+"-"+(vDate.getMonth()+1)+"-"+vDate.getDate()+"<br>"+vDate.getHours()+":"+vDate.getMinutes();  
+										return vDate.getHours()+":"+vDate.getMinutes();  
+									},  
+									align: 'center'  
+									} 
+									},
+									yAxis: {
+										title: {
+											text:'Flow (M)'
+										},
+										min: 0
+							
+									},
+								   tooltip: {
+										formatter: function() {
+												return '<b>'+ this.series.name +'</b><br>'+
+												Highcharts.dateFormat('%Y-%b-%e', this.x) +': '+ this.y +' m';
+										}
+									},
+			
+									
+									series: [{
+										name: '联通-IN',
+										data: data[0]
+									},{
+										name: '联通-OUT',
+										data: data[1]
+									}]
+								});
+							});	
+				$.getJSON('/autoMonitor/main_flow',{'flow':'dianxin_100M'}, function (data) {
+						// Create the chart
+						$('#DX').highcharts({
+									chart: {
+										type: 'spline'
+									},
+									title: {
+										text: '电信 100M'
+									},
+									xAxis: {
+									tickPixelInterval: 50,
+										type: 'datetime', 
+										/*dateTimeLabelFormats: { // don't display the dummy year
+											month: '%e. %b',
+											year: '%b'
+										}*/
+									labels: {  
+									formatter: function() {  
+										var vDate=new Date(this.value);  
+ 
+										//return vDate.getYear()+"-"+(vDate.getMonth()+1)+"-"+vDate.getDate()+"<br>"+vDate.getHours()+":"+vDate.getMinutes();  
+										return vDate.getHours()+":"+vDate.getMinutes();  
+									},  
+									align: 'center'  
+									} 
+									},
+									yAxis: {
+										title: {
+											text:'Flow (M)'
+										},
+										min: 0
+							
+									},
+								   tooltip: {
+										formatter: function() {
+												return '<b>'+ this.series.name +'</b><br>'+
+												Highcharts.dateFormat('%Y-%b-%e', this.x) +': '+ this.y +' m';
+										}
+									},
+			
+									
+									series: [{
+										name: '电信-IN',
+										data: data[0]
+									},{
+										name: '电信-OUT',
+										data: data[1]
+									}]
+								});
+							});		
+},3000000);				
+			
+				
+
+			</script>
+			
+			
+{% endblock %}

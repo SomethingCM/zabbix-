@@ -1,0 +1,93 @@
+
+{% extends 'index.html'%}
+{% block page-content%}
+<style type="text/css">
+#li2 {  margin: 0;
+	padding: 0;}
+#li1{  margin: 0;
+	}
+</style>
+
+<body>
+<div class="container-fluid alert ">
+	<div class="row">
+		<div class="col-md-2 ">
+			<div class="nav nav-sidebar " role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+						<li class="active" id='li2'><a href="" id='li2'><div class="alert alert-success" role="alert" id='li1'>监控概览</div></a></li>
+						<li><a href="/autoApp/alarm/" id='li2'><div class="alert alert-info" role="alert" id='li1'>告警信息</div></a></li>
+						<li><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id='li2'><div class="alert alert-success" role="alert" id='li1'>运行状态</div></a>   
+						<div id="collapseOne" class="panel-collapse collapse {% if 'Switch' in request.path %} in {% endif %}">
+                                <div class="panel-body">
+                                    <ul class="nav" id="side-menu">
+                                            <li><a href="/autoApp/Switch_status/">交换机</a></li>
+                                            <li><a href="/autoApp/Physical_status/">服务器</a></li>
+                                            <li><a href="/autoApp/Windows_status/">虚拟机</a></li>
+                                    </UL>
+                                </div>
+                            </div>
+							</li>
+						<li><a href="/autoApp/net_traffic/" id='li2'><div class="alert alert-info" role="alert" id='li1'>流量图</div></a></li>
+						<li><a href="/autoApp/F5_vip/" id='li2'><div class="alert alert-success" role="alert" id='li1'>F5 vip流量</div></a></li>
+						<li><a href="/autoApp/port_traffic/" id='li2'><div class="alert alert-success" role="alert" id='li1'>端口流量</div></a></li>
+						
+					  </ul>
+				</div>
+			</div>	
+		</div>
+		
+		<div class="col-md-9 container-fluid">
+		
+			<div class="panel panel-default">
+                        <div class="panel-heading">
+                             <h2 class="sub-header text-center">端口流量</h2>
+                        </div>
+						<div class="panel">
+							<form class="navbar-form navbar-left" role="search" action='/autoApp/search/',method='GET'>
+								<div class="form-group">
+								  <input type="text" class="form-control" placeholder="IP" name='ip'>
+								</div>
+								<button type="submit" class="btn btn-default">查询</button>
+								
+							 </form>
+							 
+						</div>
+						<br>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive" >
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example" aria-describedby="dataTables-example_info">
+									  <thead>
+										<tr>
+										  <th>IP</th>
+										  <th>KEY_</th>
+										  <th>Time</th>
+										  <th>流量(M)</th>
+										</tr>
+									  </thead>
+									  <tbody>
+										        {% for i in lPage %}
+													<tr style="font-size: 13px;">
+														<td>{{ i.hostname }} </td>
+														<td>{{ i.key }} </td>
+														<td>{{ i.time_c }} </td>
+														<td>{{ i.values }} </td>
+													</tr>
+												{% endfor %}
+									  </tbody>
+									</table>
+									{% include "auto_auth/common/paginator.html" %}
+							</div>
+	
+						</div>
+			</div>
+	</div>
+
+
+</body>	
+
+ {%endblock%}
+
+
+

@@ -1,0 +1,30 @@
+﻿{% extends 'index.html'%}
+{% block page-content%}
+<style>
+.webssh {
+    width:1050px;
+    height:500px; 
+}
+</style>
+	<div class="row-fluid">
+		<div class="span2">
+		<div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="">运维工具</a></li>
+            <li><a href="#">SALTSTACK</a></li>
+            <li><a href="https://192.168.46.70" target="iframe_a">WEB Terminal</a></li>
+
+          </ul>
+
+
+        </div>
+		</div>
+	<div class="span8">
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	<iframe src="" class="webssh" frameborder="0" name="iframe_a"></iframe>
+
+	</div>
+	</div>
+
+
+{%endblock%}
