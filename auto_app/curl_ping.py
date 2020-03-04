@@ -28,7 +28,7 @@ def net_info():
 		cmd = 'sudo python /root/curlping.py'#远程命令。执行远程机器固定目录下的curlping.py脚本
 		cmd1 = 'python /root/curlping.py'
 		#定义主机
-		info['bgq'] = ssh2("ip1",22,"cm","admin",cmd)
+		info['bgq'] = ssh2("ip1",22,"ss","admin",cmd)
 		info['yz'] = ssh2("ip2",22,"root","admin",cmd1)
 		# print info
 		data.append([float(info['bgq'][0][2].encode('utf-8')),float(info['yz'][0][2].encode('utf-8'))])
@@ -44,12 +44,12 @@ def net_info():
 		
 		# print data
 		'''
-		# info['bgq'] = ssh2("192.168.46.71",2222,"cm","chenmeng",cmd)
+		# info['bgq'] = ssh2("192.168.46.71",2222,"ss","ss",cmd)
 
-		##info['tn'] = ssh2("192.168.19.160",22,"root","jd07gm09cx",cmd1)
+		##info['tn'] = ssh2("192.168.19.160",22,"root","ss",cmd1)
 
-		##info['syq'] = ssh2("192.168.19.251",22,"root","jd07gm09cx",cmd1)
-		# info['syq'] = ssh2("123.103.76.83",22,"root","jd07gm09",cmd1)
+		##info['syq'] = ssh2("192.168.19.251",22,"root","ss",cmd1)
+		# info['syq'] = ssh2("123.103.76.83",22,"root","ss",cmd1)
 	
 		data.append([float(info['bgq'][0][2].encode('utf-8')),float(info['syq'][0][2].encode('utf-8')),float(info['tn'][0][2].encode('utf-8'))])
 		data.append([float(info['bgq'][0][3].encode('utf-8')),float(info['syq'][0][3].encode('utf-8')),float(info['tn'][0][3].encode('utf-8'))])
